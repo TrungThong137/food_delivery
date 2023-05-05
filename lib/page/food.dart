@@ -2,62 +2,106 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery/widget/widget.dart';
 
 class Food extends StatelessWidget {
-  const Food({super.key});
+  Food({super.key,});
 
+  final List _allFood=[
+    {"text": "Veggie tomato mix",
+    "price": "N1,900", "image": "assets/veggie.png"},
+    {"text": "Egg and cucmber",
+    "price": "N1,900", "image": "assets/EggAndRice.png"},
+    {"text": "Fried chicken",
+    "price": "N1,900", "image": "assets/FriedChicken.png"},
+    {"text": "Moi-moi and ekpa.",
+    "price": "N1,900", "image": "assets/RiceChicken.png"},
+    {"text": "Veggie tomato mix",
+    "price": "N1,900", "image": "assets/veggie.png"},
+    {"text": "Egg and cucmber",
+    "price": "N1,900", "image": "assets/EggAndRice.png"},
+  ];
+  
+  
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor:const Color.fromARGB(240, 255, 255, 255),
-      body: GridView.count(
-        padding: const EdgeInsets.only(top: 100, left: 28, right: 28, bottom: 70),
-        crossAxisCount: 2,
-        childAspectRatio: 1/1.6,
-        crossAxisSpacing: 20,
-        mainAxisSpacing: 20,
-        
-        children: [
-          cardFood(
-            text: "Veggie tomato mix",
-            price: "N1,900",
-            image: "assets/veggie.png"
-          ),
-          
-          cardFood(
-            text: "Egg and cucmber",
-            price: "N1,900",
-            image: "assets/EggAndRice.png",
-            baseLine: 230.0
-          ),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor:const Color.fromARGB(240, 255, 255, 255),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(height: 10,),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: TextFormField(
+                  style:const TextStyle(
+                    fontSize: 25
+                  ),
+                  decoration:const InputDecoration(
+                    hintText: "search",
+                    prefixIcon: Icon(
+                      Icons.arrow_back_ios_new, 
+                      color: Colors.black, size: 18,
+                    ),
+                    border: InputBorder.none,
+                  ),
 
-          cardFood(
-            text: "Fried chicken",
-            price: "N1,900",
-            image: "assets/FriedChicken.png",
+                ),
+              ),
+              const SizedBox(height: 10,),
+              Container(
+                height: 635,
+                decoration:const BoxDecoration(
+                  color:Color.fromARGB(162, 255, 255, 255),
+                  borderRadius:  BorderRadius.all(Radius.circular(30))
+                ),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 40,),
+                    textWidget(
+                      text: "Found 6 results",
+                      fontSize: 25.0,
+                      fontWeight: FontWeight.bold
+                    ),
+                    Expanded(
+                      child: GridView.builder(
+                        gridDelegate:const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 1/1.45,
+                          crossAxisSpacing: 20,
+                          mainAxisSpacing: 20,
+                          
+                        ),
+                        padding: const EdgeInsets.only(top: 20, left: 28, right: 28, bottom: 70),
+                        
+                        itemCount: _allFood.length,
+                        itemBuilder: (context, index){
+                          if(index%2==0){
+                            return cardFood(
+                              text: _allFood[index]["text"],
+                              price: _allFood[index]["price"],
+                              image: _allFood[index]["image"]
+                            );
+                          }else{
+                            return cardFood(
+                              text: _allFood[index]["text"],
+                              price: _allFood[index]["price"],
+                              image: _allFood[index]["image"],
+                              baseLine: 230.0
+                            );
+                          }
+                        }
+                          
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-
-          cardFood(
-            text: "Moi-moi and ekpa.",
-            price: "N1,900",
-            image: "assets/RiceChicken.png",
-            baseLine: 230.0
-          ),
-
-          cardFood(
-            text: "Veggie tomato mix",
-            price: "N1,900",
-            image: "assets/veggie.png",
-          ),
-
-          cardFood(
-            text: "Egg and cucmber",
-            price: "N1,900",
-            image: "assets/EggAndRice.png",
-            baseLine: 230.0
-          ),
-        ],
+        ),
       ),
     );
   }
+
   Widget cardFood({text, price, image, baseLine}){
     return Baseline(
       baseline: baseLine?? 180,
