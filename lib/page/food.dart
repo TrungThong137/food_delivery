@@ -1,30 +1,62 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/widget/widget.dart';
+import 'package:food_delivery/widget/string.dart';
 
 class Food extends StatelessWidget {
-  Food({super.key,});
-
-  final List _allFood=[
-    {"text": "Veggie tomato mix",
-    "price": "N1,900", "image": "assets/veggie.png"},
-    {"text": "Egg and cucmber",
-    "price": "N1,900", "image": "assets/EggAndRice.png"},
-    {"text": "Fried chicken",
-    "price": "N1,900", "image": "assets/FriedChicken.png"},
-    {"text": "Moi-moi and ekpa.",
-    "price": "N1,900", "image": "assets/RiceChicken.png"},
-    {"text": "Veggie tomato mix",
-    "price": "N1,900", "image": "assets/veggie.png"},
-    {"text": "Egg and cucmber",
-    "price": "N1,900", "image": "assets/EggAndRice.png"},
-  ];
+  const Food({super.key,});
   
+  Widget cardFood(int index,{ baseLine}){
+    return Baseline(
+      baseline: baseLine?? 180,
+      baselineType: TextBaseline.alphabetic,
+      child: Stack(
+        alignment: Alignment.center,
+        children:[
+          Card(
+            shape:const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(80), 
+                topRight: Radius.circular(80),
+                bottomLeft: Radius.circular(25),
+                bottomRight: Radius.circular(25),
+              )
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  textWidget(
+                    text: allFood[index]["text"],
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                    textAlign: TextAlign.center
+                  ),
+                  const SizedBox(height: 12,),
+                  textWidget(
+                    color: Colors.deepOrange,
+                    text: allFood[index]["price"],
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold
+                  )
+                ],
+              ),
+            ),
+          ),
+          Positioned(
+            top: 0,
+            child: Image.asset(allFood[index]["image"])
+          )
+        ] 
+      ),
+    );
+  }
   
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor:const Color.fromARGB(240, 255, 255, 255),
+        backgroundColor:const Color.fromRGBO(237,237,237,1),
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -72,21 +104,12 @@ class Food extends StatelessWidget {
                         ),
                         padding: const EdgeInsets.only(top: 20, left: 28, right: 28, bottom: 70),
                         
-                        itemCount: _allFood.length,
+                        itemCount: allFood.length,
                         itemBuilder: (context, index){
                           if(index%2==0){
-                            return cardFood(
-                              text: _allFood[index]["text"],
-                              price: _allFood[index]["price"],
-                              image: _allFood[index]["image"]
-                            );
+                            return cardFood(index);
                           }else{
-                            return cardFood(
-                              text: _allFood[index]["text"],
-                              price: _allFood[index]["price"],
-                              image: _allFood[index]["image"],
-                              baseLine: 230.0
-                            );
+                            return cardFood(index, baseLine: 230.0);
                           }
                         }
                           
@@ -98,53 +121,6 @@ class Food extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget cardFood({text, price, image, baseLine}){
-    return Baseline(
-      baseline: baseLine?? 180,
-      baselineType: TextBaseline.alphabetic,
-      child: Stack(
-        alignment: Alignment.center,
-        children:[
-          Card(
-            shape:const RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(80), 
-                topRight: Radius.circular(80),
-                bottomLeft: Radius.circular(25),
-                bottomRight: Radius.circular(25),
-              )
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  textWidget(
-                    text: text,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                    textAlign: TextAlign.center
-                  ),
-                  const SizedBox(height: 12,),
-                  textWidget(
-                    color: Colors.deepOrange,
-                    text: price,
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold
-                  )
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-            top: 0,
-            child: Image.asset(image)
-          )
-        ] 
       ),
     );
   }
