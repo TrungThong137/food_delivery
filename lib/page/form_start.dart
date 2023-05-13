@@ -24,7 +24,7 @@ class _FormStartState extends State<FormStart> {
               Stack(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 203, top: 110),
+                    padding: const EdgeInsets.only(left: 220, top: 110),
                     child: Image.asset("assets/male.png", width: 190,),
                   ),
                   Image.asset("assets/female.png", width: 297,),

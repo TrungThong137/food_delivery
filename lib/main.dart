@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery/page/food.dart';
+import 'package:food_delivery/page/form_payment.dart';
+import 'package:food_delivery/page/form_start.dart';
 import 'package:food_delivery/page/home/home.dart';
 
 void main() {
@@ -12,11 +13,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.deepOrange,
       ),
-      home: const Food(),
+      home: const PageHome(),
     );
   }
 }

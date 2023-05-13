@@ -3,8 +3,9 @@ import 'package:food_delivery/widget/string.dart';
 import 'package:food_delivery/widget/widget.dart';
 
 class Home extends StatelessWidget {
-  const Home({super.key, this.onTap});
+  const Home({super.key, this.onTap, this.onTapCloseMenu});
   final Function ? onTap;
+  final Function ? onTapCloseMenu;
 
   Widget inputSearch(){
     return Padding(
@@ -97,7 +98,9 @@ class Home extends StatelessWidget {
       children: [
         IconButton(
           padding:const EdgeInsets.only(right:15),
-          onPressed: (){}, 
+          onPressed: (){
+            onTapCloseMenu!();
+          }, 
           icon:const Icon(Icons.menu, size: 30,)
         ),
         IconButton(
@@ -150,7 +153,9 @@ class Home extends StatelessWidget {
               style: TextButton.styleFrom(
                 padding:const EdgeInsets.only(left: 220)
               ),
-              onPressed: (){},
+              onPressed: (){
+                onTap!();
+              },
               child:const Text("see more",
                 style: TextStyle(
                   color: Color.fromRGBO(250, 74, 12, 1),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery/page/home/home.dart';
 import 'package:food_delivery/page/my_profile.dart';
 import 'package:food_delivery/widget/string.dart';
 import 'package:food_delivery/widget/widget.dart';
@@ -44,7 +45,7 @@ class _BodyInputLoginState extends State<BodyInputLogin> {
               fontWeight: FontWeight.bold,
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(
-                  builder: (context)=> const MyProfile()));
+                  builder: (context)=> const PageHome()));
               },
               text: "Login",
               background: Colors.deepOrange

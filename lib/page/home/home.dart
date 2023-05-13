@@ -1,6 +1,9 @@
+
+
 import 'package:flutter/material.dart';
-import 'package:food_delivery/page/food.dart';
+import 'package:food_delivery/page/description_food/descriptions_food.dart';
 import 'package:food_delivery/page/home/page_home.dart';
+import 'package:food_delivery/page/home/side_menu.dart';
 
 class PageHome extends StatefulWidget {
   const PageHome({super.key});
@@ -9,9 +12,10 @@ class PageHome extends StatefulWidget {
   State<PageHome> createState() => _PageHomeState();
 }
 
-class _PageHomeState extends State<PageHome>{
+class _PageHomeState extends State<PageHome> with SingleTickerProviderStateMixin{
 
   int selectedIndex = 0;
+  bool isMenuClose=false;
   final Widget _myEmails = const MyEmails();
   final Widget _myProfile = const MyProfile();
 
@@ -62,7 +66,9 @@ class _PageHomeState extends State<PageHome>{
               ),
             ],
             onTap: (int index) {
-              onTapHandler(index);
+              setState(() {
+                selectedIndex=index;
+              });
             },
           ),
         ),
@@ -72,20 +78,35 @@ class _PageHomeState extends State<PageHome>{
   
   Widget getBody( )  {
     if(selectedIndex == 0) {
-      return Home(
-        
+      return Stack(
+        children:[
+          Positioned(
+            width: isMenuClose? 288:0,
+            height: MediaQuery.of(context).size.height,
+            child: const SideMenu()
+          ),
+          Transform.translate(
+            offset: Offset(isMenuClose? 288:0, 0),
+            child: Home(
+              onTapCloseMenu: (){
+                setState(() {
+                  isMenuClose=!isMenuClose;
+                });
+              },
+
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context)=> const DescriptionsFood()));
+              },
+            ),
+          )
+        ] 
       );
     } else if(selectedIndex==1) {
       return _myEmails;
     } else {
       return _myProfile;
     }
-  }
-
-  void onTapHandler(int index)  {
-    setState(() {
-      selectedIndex = index;
-    });
   }
 }
 
