@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery/firebase/firebase_auth.dart';
 
 
 class SideMenu extends StatefulWidget {
@@ -10,7 +11,8 @@ class SideMenu extends StatefulWidget {
 
 class _SideMenuState extends State<SideMenu> {
   bool isActive=false;
-  var isIndex=0;
+  int isIndex=-1;
+  final FireAuth _fireAuth=FireAuth();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,22 +52,33 @@ class _SideMenuState extends State<SideMenu> {
               slideMenuTitle(
                 icon: Icons.home_outlined,
                 text: "Home",
+                index: 0
               ),
 
               slideMenuTitle(
                 icon: Icons.search,
                 text: "Search",
+                index: 1
               ),
 
               slideMenuTitle(
                 icon: Icons.star_outline,
                 text: "Favorites",
+                index: 2
               ),
 
               slideMenuTitle(
                 icon: Icons.favorite_outline,
                 text: "Heart",
+                index: 3
               ),
+
+              const SizedBox(height: 100,),
+              slideMenuTitle(
+                icon: Icons.logout_outlined,
+                text: 'Log out',
+                index: 4
+              )
             ],
           ),
         ),
@@ -73,34 +86,47 @@ class _SideMenuState extends State<SideMenu> {
     );
   }
 
-  Widget slideMenuTitle({icon, text, ontap}){
-    return Stack(
-      children: [
-        AnimatedPositioned(
-          duration: const Duration(milliseconds: 100),
-          height: 56,
-          width: isActive ? 288 : 0,
-          left: 0,
-          child: Container(
-            decoration: const BoxDecoration(
-              color: Color(0xFF6792FF),
-              borderRadius: BorderRadius.all(Radius.circular(10))
-            ),
-          )
-        ),
-        ListTile(
-          leading: SizedBox(
-            height: 34,
-            width: 34,
-            child: Icon(icon, color: Colors.white,),
+  Widget slideMenuTitle({icon, text, ontap,required index}){
+    return InkWell(
+      onTap: (){
+        if(index==4){
+          setState(() {
+            isIndex=index;
+            _fireAuth.signOut();
+          });
+          Navigator.pop(context);
+        }
+        setState(() {
+          isIndex=index;
+        });
+      },
+      child: Stack(
+        children: [
+          AnimatedPositioned(
+            duration: const Duration(milliseconds: 100),
+            height: 56,
+            width: isIndex==index ? 288 : 0,
+            left: 0,
+            child: Container(
+              decoration: const BoxDecoration(
+                color: Color(0xFF6792FF),
+                borderRadius: BorderRadius.all(Radius.circular(10))
+              ),
+            )
           ),
-          title: Text(
-            text??"",
-          style: const TextStyle(color: Colors.white),
-          )
-        ),
-
-      ]
+          ListTile(
+            leading: SizedBox(
+              height: 34,
+              width: 34,
+              child: Icon(icon, color: Colors.white,),
+            ),
+            title: Text(
+              text??"",
+            style: const TextStyle(color: Colors.white),
+            )
+          ),
+        ]
+      ),
     );
   }
 }

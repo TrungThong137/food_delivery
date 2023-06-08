@@ -29,7 +29,7 @@ class _PageHomeState extends State<PageHome> with SingleTickerProviderStateMixin
           body: getBody(),
           bottomNavigationBar: BottomNavigationBar(
             backgroundColor: const Color.fromRGBO(242,242,242,1),
-            elevation: 0.9,
+            elevation: 0,
             type: BottomNavigationBarType.fixed,
             currentIndex: selectedIndex,
             showSelectedLabels: false,

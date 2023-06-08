@@ -39,6 +39,9 @@ dependencies:
   introduction_screen: ^3.1.8
   smooth_page_indicator: ^1.0.0
   rive: ^0.9.1
+  firebase_auth: ^4.6.2
+  firebase_core: ^2.13.1
+  firebase_database: ^10.2.2
 
 dev_dependencies:
   flutter_test:

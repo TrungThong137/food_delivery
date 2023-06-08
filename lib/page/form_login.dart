@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery/dialog/error_dialog.dart';
+import 'package:food_delivery/dialog/loading_page.dart';
+import 'package:food_delivery/firebase/firebase_auth.dart';
 import 'package:food_delivery/page/home/home.dart';
-import 'package:food_delivery/page/my_profile.dart';
 import 'package:food_delivery/widget/string.dart';
 import 'package:food_delivery/widget/widget.dart';
 
 class BodyInputLogin extends StatefulWidget {
-  const BodyInputLogin({super.key, this.onTap});
-  final Function ? onTap;
+  const BodyInputLogin({super.key,});
 
   @override
   State<BodyInputLogin> createState() => _BodyInputLoginState();
 }
 
 class _BodyInputLoginState extends State<BodyInputLogin> {
+
+  final FireAuth _fireAuth= FireAuth();
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -44,8 +48,10 @@ class _BodyInputLoginState extends State<BodyInputLogin> {
               fontSize: 20.0, 
               fontWeight: FontWeight.bold,
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (context)=> const PageHome()));
+                setState(() {
+                  
+                });
+                _onSignUpClicked();
               },
               text: "Login",
               background: Colors.deepOrange
@@ -54,5 +60,34 @@ class _BodyInputLoginState extends State<BodyInputLogin> {
         ),
       ),
     );
+  }
+  void _onSignUpClicked(){
+    if(emailController.text.contains('@') && emailController.text.length>6){
+      isEmail=true;
+    }else{
+      isEmail=false;
+    }
+    if(passController.text.length>6){
+      ispass=true;
+    }else{
+      ispass=false;
+    }
+
+    if(isEmail && ispass){
+      
+      LoadingDialog.showLoadingDialog(context, 'Loading...');
+      _fireAuth.signUp(
+        emailController.text.trim(),
+        passController.text.trim(),
+        (){
+          LoadingDialog.hideShowDialog(context);
+          Navigator.push(context, MaterialPageRoute(
+                  builder: (context)=> const PageHome()));
+        }, (msg){
+          LoadingDialog.hideShowDialog(context);
+          ErrorDialog.showErrorDialog(context, 'Sign-In', msg);
+        } 
+      );
+    }
   }
 }

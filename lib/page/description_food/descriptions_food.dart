@@ -85,7 +85,17 @@ class _DescriptionsFoodState extends State<DescriptionsFood> {
               
                   SmoothPageIndicator(
                     controller: _controller, 
-                    count: 3
+                    count: 3,
+                    effect: WormEffect(
+                      spacing: 16,
+                      dotColor: Colors.black,
+                      activeDotColor: Colors.teal.shade700
+                    ),
+                    onDotClicked: (index) => _controller.animateToPage(
+                      index, 
+                      duration: const Duration(milliseconds: 500), 
+                      curve: Curves.linear
+                    ),
                   ),
               
                   onLastPage ?
